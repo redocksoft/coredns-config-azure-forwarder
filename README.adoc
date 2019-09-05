@@ -10,6 +10,9 @@ https://docs.microsoft.com/en-us/azure/container-instances/container-instances-v
 volume] to an ACI container using the https://hub.docker.com/u/coredns[CoreDNS]
 image.
 
+NOTE: As far as I know this is not actually usable today, as ACI does not provide the ability to assign a static
+private IP address to the container. See https://feedback.azure.com/forums/602224-azure-container-instances/suggestions/36989110-allow-aci-instances-to-use-a-static-ip-address-whe.
+
 == Usage
 
 Example deployment:
