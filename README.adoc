@@ -1,0 +1,33 @@
+= CoreDNS Configuration for Azure DNS Forwarding
+
+Some use cases in Azure require
+https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-name-resolution-for-vms-and-role-instances#name-resolution-that-uses-your-own-dns-server[DNS
+forwarding] to the Azure DNS virtual IP 168.63.129.16.
+
+This repository configures CoreDNS for use with this scenario and can be
+provided as a
+https://docs.microsoft.com/en-us/azure/container-instances/container-instances-volume-gitrepo[gitRepo
+volume] to an ACI container using the https://hub.docker.com/u/coredns[CoreDNS]
+image.
+
+== Usage
+
+Example deployment:
+
+```
+az container create \
+  --resource-group myResourceGroup \
+  --location myLocation \
+  --memory 0.5 \
+  --name dns-forwarder \
+  --image coredns/coredns:latest \
+  --ports 53 \
+  --protocol UDP \
+  --ip-address Private \
+  --gitrepo-url https://github.com/redocksoft/coredns-config-azure-forwarder \
+  --gitrepo-mount-path /config \
+  --command-line "/coredns -conf /config/Corefile"
+```
+
+
+(c) 2019 reDock Inc.
